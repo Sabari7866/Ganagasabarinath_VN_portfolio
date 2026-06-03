@@ -7,16 +7,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #050508;
-    --surface: #0d0d14;
+    --bg: #030307;
+    --surface: rgba(13, 13, 22, 0.7);
+    --surface-solid: #0b0b12;
     --accent: #00f5c4;
-    --accent2: #7c3aed;
+    --accent-rgb: 0, 245, 196;
+    --accent2: #8b5cf6;
+    --accent2-rgb: 139, 92, 246;
     --accent3: #f59e0b;
-    --text: #e8e8f0;
-    --muted: #6b6b8a;
-    --border: rgba(0,245,196,0.15);
-    --glow: 0 0 30px rgba(0,245,196,0.3);
-    --glow2: 0 0 30px rgba(124,58,237,0.4);
+    --text: #f1f1f7;
+    --muted: #8b8ba8;
+    --border: rgba(0, 245, 196, 0.12);
+    --border-hover: rgba(0, 245, 196, 0.4);
+    --glow: 0 0 25px rgba(0, 245, 196, 0.25);
+    --glow-strong: 0 0 35px rgba(0, 245, 196, 0.5);
+    --glow2: 0 0 25px rgba(139, 92, 246, 0.35);
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,27 +38,33 @@
 
   /* Custom Cursor */
   .cursor {
-    position: fixed; width: 12px; height: 12px;
+    position: fixed; width: 8px; height: 8px;
     background: var(--accent); border-radius: 50%;
     pointer-events: none; z-index: 9999;
     transform: translate(-50%,-50%);
-    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    transition: transform 0.08s, width 0.2s, height 0.2s, background 0.2s;
     mix-blend-mode: difference;
   }
   .cursor-ring {
-    position: fixed; width: 36px; height: 36px;
+    position: fixed; width: 32px; height: 32px;
     border: 1.5px solid var(--accent); border-radius: 50%;
     pointer-events: none; z-index: 9998;
     transform: translate(-50%,-50%);
-    transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+    transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.25s;
+  }
+
+  /* Canvas Particle Background */
+  #particle-canvas {
+    position: fixed; inset: 0; z-index: 1;
+    pointer-events: none; width: 100%; height: 100%;
   }
 
   /* Noise Overlay */
   body::before {
     content: '';
-    position: fixed; inset: 0; z-index: 1;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    position: fixed; inset: 0; z-index: 2;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     pointer-events: none;
   }
 
@@ -62,9 +73,9 @@
     content: '';
     position: fixed; inset: 0; z-index: 0;
     background-image:
-      linear-gradient(rgba(0,245,196,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,245,196,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+      linear-gradient(rgba(0, 245, 196, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 245, 196, 0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
     pointer-events: none;
   }
 
@@ -73,136 +84,176 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.2rem 4rem;
-    background: rgba(5,5,8,0.85);
+    background: rgba(3, 3, 7, 0.75);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
   .nav-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem; letter-spacing: 0.1em;
+    font-size: 1.8rem; letter-spacing: 0.12em;
     color: var(--accent); text-decoration: none;
+    text-shadow: var(--glow);
+    transition: text-shadow 0.3s;
+  }
+  .nav-logo:hover {
+    text-shadow: var(--glow-strong);
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; letter-spacing: 0.15em;
+    font-size: 0.78rem; letter-spacing: 0.15em;
     color: var(--muted); text-decoration: none; text-transform: uppercase;
-    transition: color 0.2s;
+    transition: color 0.3s, text-shadow 0.3s;
+    position: relative;
+    padding: 0.4rem 0;
   }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover {
+    color: var(--accent);
+    text-shadow: var(--glow);
+  }
+  .nav-links a:hover::after {
+    width: 100%;
+  }
 
   /* HERO */
   #hero {
-    position: relative; z-index: 2;
+    position: relative; z-index: 3;
     min-height: 100vh;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 0 4rem;
+    padding: 0 6rem;
     overflow: hidden;
   }
   .hero-bg-text {
     position: absolute; top: 50%; right: -2rem;
     transform: translateY(-50%);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(120px, 20vw, 280px);
+    font-size: clamp(140px, 25vw, 360px);
     color: transparent;
-    -webkit-text-stroke: 1px rgba(0,245,196,0.07);
+    -webkit-text-stroke: 1.5px rgba(0,245,196,0.04);
     line-height: 1;
     pointer-events: none;
     user-select: none;
   }
   .hero-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+    font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 1.5rem;
+    text-shadow: var(--glow);
     opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
   }
   .hero-tag::before { content: '> '; }
   h1.hero-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(60px, 10vw, 130px);
-    line-height: 0.9;
-    letter-spacing: 0.02em;
+    font-size: clamp(42px, 8.5vw, 115px);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
     opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+    margin-bottom: 1rem;
+    word-break: break-word;
   }
-  h1.hero-name .line2 { color: var(--accent); }
+  h1.hero-name .line2 {
+    color: var(--accent);
+    text-shadow: var(--glow);
+  }
   .hero-desc {
-    margin-top: 2rem; max-width: 560px;
-    font-size: 1.05rem; line-height: 1.7;
+    margin-top: 1.5rem; max-width: 580px;
+    font-size: 1.1rem; line-height: 1.75;
     color: var(--muted);
     opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
   }
   .hero-cta {
-    margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-top: 2.5rem; display: flex; gap: 1.2rem; flex-wrap: wrap;
     opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
   }
   .btn {
-    padding: 0.8rem 2rem;
+    padding: 0.9rem 2.2rem;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
     border: none; cursor: pointer; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-weight: 700;
   }
   .btn-primary {
-    background: var(--accent); color: #000;
+    background: var(--accent); color: #030307;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    box-shadow: 0 4px 15px rgba(0, 245, 196, 0.2);
   }
-  .btn-primary:hover { background: #00ffcf; box-shadow: var(--glow); transform: translateY(-2px); }
+  .btn-primary:hover {
+    background: #00ffcf;
+    box-shadow: var(--glow-strong);
+    transform: translateY(-3px);
+  }
   .btn-outline {
     background: transparent; color: var(--accent);
     border: 1px solid var(--accent);
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
   }
-  .btn-outline:hover { background: rgba(0,245,196,0.08); transform: translateY(-2px); }
+  .btn-outline:hover {
+    background: rgba(0,245,196,0.08);
+    transform: translateY(-3px);
+    box-shadow: var(--glow);
+    border-color: #00ffcf;
+  }
 
   .hero-stats {
-    margin-top: 4rem; display: flex; gap: 3rem;
-    opacity: 0; animation: fadeUp 0.7s 1s forwards;
+    margin-top: 4.5rem; display: flex; gap: 3.5rem;
+    opacity: 0; animation: fadeUp 0.7s 1.0s forwards;
   }
   .stat-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem; color: var(--accent); line-height: 1;
+    font-size: 3rem; color: var(--accent); line-height: 1;
+    text-shadow: var(--glow);
   }
   .stat-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em;
-    margin-top: 0.2rem;
+    font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em;
+    margin-top: 0.3rem;
   }
 
   /* SECTIONS */
-  section { position: relative; z-index: 2; padding: 6rem 4rem; }
+  section { position: relative; z-index: 3; padding: 7rem 6rem; }
 
   .section-header {
-    display: flex; align-items: center; gap: 1.5rem; margin-bottom: 4rem;
+    display: flex; align-items: center; gap: 1.5rem; margin-bottom: 4.5rem;
   }
   .section-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; color: var(--accent); letter-spacing: 0.2em;
+    font-size: 0.8rem; color: var(--accent); letter-spacing: 0.2em;
+    text-shadow: var(--glow);
   }
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 5vw, 60px); letter-spacing: 0.05em;
+    font-size: clamp(40px, 6vw, 65px); letter-spacing: 0.05em;
     line-height: 1;
   }
   .section-line {
-    flex: 1; height: 1px; background: var(--border); max-width: 300px;
+    flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); max-width: 350px;
   }
 
   /* ABOUT */
   #about .about-grid {
-    display: grid; grid-template-columns: 1.2fr 1fr; gap: 6rem; align-items: center;
+    display: grid; grid-template-columns: 1.25fr 1fr; gap: 6rem; align-items: center;
   }
-  .about-text p { font-size: 1.05rem; line-height: 1.9; color: var(--muted); margin-bottom: 1.2rem; }
-  .about-text p span { color: var(--text); }
+  .about-text p { font-size: 1.08rem; line-height: 1.9; color: var(--muted); margin-bottom: 1.4rem; }
+  .about-text p span { color: var(--text); font-weight: 700; }
   .about-highlight {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(24px, 3vw, 36px);
-    color: var(--accent); line-height: 1.2; margin-bottom: 1.5rem;
+    font-size: clamp(26px, 3.2vw, 42px);
+    color: var(--accent); line-height: 1.25; margin-bottom: 2rem;
+    text-shadow: var(--glow);
   }
   .avatar-box {
     position: relative; width: 100%; aspect-ratio: 1;
-    max-width: 380px; margin: 0 auto;
+    max-width: 360px; margin: 0 auto;
   }
   .avatar-inner {
     width: 100%; height: 100%;
@@ -210,31 +261,45 @@
     clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     display: flex; align-items: center; justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 6rem; color: rgba(0,0,0,0.4);
+    font-size: 6rem; color: rgba(0,0,0,0.45);
     letter-spacing: 0.05em;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid transparent;
+  }
+  .avatar-inner img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .avatar-box:hover .avatar-inner img {
+    transform: scale(1.08);
   }
   .avatar-ring {
-    position: absolute; inset: -12px;
-    border: 1px dashed var(--accent);
+    position: absolute; inset: -14px;
+    border: 1.5px dashed var(--accent);
     clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
-    animation: spin 20s linear infinite;
+    animation: spin 30s linear infinite;
+    pointer-events: none;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* SKILLS */
   #skills .skills-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.8rem;
   }
   .skill-card {
     background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border);
-    padding: 2rem;
+    padding: 2.2rem;
     position: relative; overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
   }
   .skill-card:hover {
-    border-color: var(--accent); transform: translateY(-4px);
+    border-color: var(--accent); transform: translateY(-5px);
     box-shadow: var(--glow);
   }
   .skill-card::before {
@@ -243,92 +308,120 @@
     opacity: 0; transition: opacity 0.3s;
   }
   .skill-card:hover::before { opacity: 1; }
-  .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .skill-icon { font-size: 2.2rem; margin-bottom: 1.2rem; }
   .skill-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem; letter-spacing: 0.08em; margin-bottom: 0.8rem; color: var(--text);
+    font-size: 1.4rem; letter-spacing: 0.08em; margin-bottom: 1rem; color: var(--text);
   }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; padding: 0.3rem 0.7rem;
-    background: rgba(0,245,196,0.06); border: 1px solid rgba(0,245,196,0.2);
+    font-size: 0.68rem; padding: 0.35rem 0.8rem;
+    background: rgba(0,245,196,0.05); border: 1px solid rgba(0,245,196,0.18);
     color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;
+    transition: all 0.2s;
+  }
+  .tag:hover {
+    background: rgba(0,245,196,0.12);
+    border-color: var(--accent);
+    text-shadow: var(--glow);
   }
 
   /* PROJECTS */
+  .projects-filter-bar {
+    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem;
+  }
+  .filter-btn {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); padding: 0.6rem 1.4rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;
+    transition: all 0.3s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .filter-btn:hover, .filter-btn.active {
+    color: var(--accent); border-color: var(--accent);
+    background: rgba(0, 245, 196, 0.05);
+    box-shadow: var(--glow);
+  }
   #projects .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2.2rem;
   }
   .project-card {
     background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     padding: 2.5rem;
     position: relative; overflow: hidden;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
   }
   .project-card:hover {
-    border-color: var(--accent); transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--glow);
+    border-color: var(--accent); transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6), var(--glow);
   }
   .project-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 4rem; color: rgba(0,245,196,0.06);
-    position: absolute; top: 1rem; right: 1.5rem; line-height: 1;
+    font-size: 4.5rem; color: rgba(0,245,196,0.04);
+    position: absolute; top: 1rem; right: 1.8rem; line-height: 1;
     transition: color 0.3s;
   }
   .project-card:hover .project-num { color: rgba(0,245,196,0.12); }
   .project-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--accent3); margin-bottom: 1rem; display: block;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent3); margin-bottom: 1.2rem; display: block;
+    font-weight: 700;
   }
   .project-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem; letter-spacing: 0.05em; margin-bottom: 1rem;
+    font-size: 1.7rem; letter-spacing: 0.05em; margin-bottom: 1.2rem;
     line-height: 1.1;
   }
   .project-desc {
-    font-size: 0.9rem; line-height: 1.7; color: var(--muted); margin-bottom: 1.5rem;
+    font-size: 0.95rem; line-height: 1.75; color: var(--muted); margin-bottom: 1.8rem;
   }
-  .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   /* EXPERIENCE */
-  #experience .timeline { position: relative; padding-left: 2rem; }
+  #experience .timeline { position: relative; padding-left: 2.5rem; }
   #experience .timeline::before {
     content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-    width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
+    width: 1px; background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
   }
   .exp-item {
-    position: relative; margin-bottom: 3rem;
-    padding: 2rem; background: var(--surface);
+    position: relative; margin-bottom: 3.5rem;
+    padding: 2.2rem; background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
-  .exp-item:hover { border-color: var(--accent); }
+  .exp-item:hover { border-color: var(--accent); box-shadow: var(--glow); }
   .exp-item::before {
-    content: ''; position: absolute; left: -2.5rem; top: 2rem;
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--accent); box-shadow: 0 0 12px var(--accent);
+    content: ''; position: absolute; left: -3.05rem; top: 2.2rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 15px var(--accent);
   }
   .exp-role {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem; letter-spacing: 0.05em; margin-bottom: 0.3rem;
+    font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 0.4rem;
   }
   .exp-company {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1rem;
+    font-size: 0.78rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1rem;
   }
   .exp-period {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; color: var(--muted); margin-bottom: 1rem;
+    font-size: 0.72rem; color: var(--muted); margin-bottom: 1.2rem;
   }
   .exp-points { list-style: none; }
   .exp-points li {
-    font-size: 0.9rem; color: var(--muted); padding: 0.3rem 0;
-    padding-left: 1.2rem; position: relative;
+    font-size: 0.95rem; color: var(--muted); padding: 0.4rem 0;
+    padding-left: 1.4rem; position: relative;
+    line-height: 1.6;
   }
   .exp-points li::before {
     content: '▸'; position: absolute; left: 0; color: var(--accent);
@@ -336,70 +429,189 @@
 
   /* CERTIFICATIONS */
   #certifications .cert-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.8rem;
   }
   .cert-card {
     background: var(--surface); border: 1px solid var(--border);
-    padding: 2rem; display: flex; gap: 1.2rem; align-items: flex-start;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem; display: flex; gap: 1.4rem; align-items: flex-start;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
     transition: all 0.3s;
   }
-  .cert-card:hover { border-color: var(--accent3); box-shadow: 0 0 20px rgba(245,158,11,0.2); }
-  .cert-icon { font-size: 2rem; flex-shrink: 0; }
-  .cert-body {}
-  .cert-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
-  .cert-issuer { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent3); }
+  .cert-card:hover { border-color: var(--accent3); box-shadow: 0 0 20px rgba(245,158,11,0.25); }
+  .cert-icon { font-size: 2.2rem; flex-shrink: 0; }
+  .cert-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
+  .cert-issuer { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent3); }
 
   /* CONTACT */
   #contact {
     text-align: center;
+    padding-bottom: 9rem;
   }
   .contact-tagline {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(40px, 7vw, 90px);
+    font-size: clamp(45px, 8vw, 95px);
     line-height: 1; margin-bottom: 1.5rem;
     background: linear-gradient(135deg, var(--text), var(--accent));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .contact-sub { font-size: 1rem; color: var(--muted); margin-bottom: 3rem; max-width: 500px; margin-left: auto; margin-right: auto; }
-  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .contact-sub { font-size: 1.05rem; color: var(--muted); margin-bottom: 3.5rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .contact-links { display: flex; justify-content: center; gap: 1.8rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
   .contact-link {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; letter-spacing: 0.1em;
+    font-size: 0.82rem; letter-spacing: 0.1em;
     color: var(--muted); text-decoration: none;
-    padding: 0.8rem 1.5rem; border: 1px solid var(--border);
-    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 1.6rem; border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0.7rem;
     transition: all 0.25s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
   .contact-link:hover {
     color: var(--accent); border-color: var(--accent);
     box-shadow: var(--glow);
   }
 
+  /* CHAT WIDGET */
+  .chat-widget {
+    position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .chat-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border: none; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; font-size: 1.6rem; color: #fff;
+    box-shadow: 0 8px 30px rgba(0, 245, 196, 0.35);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .chat-btn:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: var(--glow-strong);
+  }
+  .chat-btn.active {
+    transform: scale(0.9) rotate(-45deg);
+  }
+  .chat-window {
+    position: absolute; bottom: 80px; right: 0;
+    width: 380px; height: 500px;
+    background: rgba(11, 11, 18, 0.92);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--border);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.8), var(--glow);
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(30px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+  }
+  .chat-window.open {
+    opacity: 1; transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+  .chat-header {
+    padding: 1.2rem; background: rgba(0, 245, 196, 0.05);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .chat-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); display: flex; align-items: center;
+    justify-content: center; font-size: 0.95rem; color: #000;
+    font-weight: 700;
+  }
+  .chat-title-info {
+    flex: 1; text-align: left;
+  }
+  .chat-name-title { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+  .chat-status { font-size: 0.62rem; color: var(--accent); display: flex; align-items: center; gap: 0.3rem; }
+  .chat-status::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: var(--glow); }
+  
+  .chat-messages {
+    flex: 1; padding: 1.2rem; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 1rem;
+    scroll-behavior: smooth;
+  }
+  .chat-msg {
+    max-width: 80%; padding: 0.75rem 1rem;
+    font-size: 0.78rem; line-height: 1.65;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    text-align: left;
+  }
+  .chat-msg.bot {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
+    align-self: flex-start; color: var(--text);
+  }
+  .chat-msg.user {
+    background: var(--accent); color: #000;
+    align-self: flex-end; font-weight: 500;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  }
+  .chat-chips {
+    padding: 0.8rem 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem;
+    border-top: 1px solid rgba(255,255,255,0.03);
+  }
+  .chat-chip {
+    font-size: 0.65rem; background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    color: var(--accent2); padding: 0.4rem 0.8rem;
+    cursor: pointer; transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+  .chat-chip:hover {
+    background: var(--accent2); color: #fff;
+    border-color: var(--accent2);
+    box-shadow: var(--glow2);
+  }
+  .chat-input-area {
+    padding: 0.8rem 1.2rem; border-top: 1px solid var(--border);
+    display: flex; gap: 0.6rem;
+  }
+  .chat-input {
+    flex: 1; background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border); padding: 0.6rem 1rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    color: var(--text); outline: none;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .chat-input:focus {
+    border-color: var(--accent);
+  }
+  .chat-send-btn {
+    background: var(--accent); border: none; cursor: pointer;
+    width: 36px; display: flex; align-items: center; justify-content: center;
+    color: #000; font-size: 0.9rem;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    transition: background 0.2s;
+  }
+  .chat-send-btn:hover { background: #00ffcf; }
+
   /* FOOTER */
   footer {
-    position: relative; z-index: 2;
+    position: relative; z-index: 3;
     border-top: 1px solid var(--border);
-    padding: 2rem 4rem;
+    padding: 2.2rem 6rem;
     display: flex; justify-content: space-between; align-items: center;
+    background: rgba(3, 3, 7, 0.9);
   }
-  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+  footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
   footer .footer-accent { color: var(--accent); }
 
   /* SCROLL BAR */
-  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--accent); }
 
   /* ANIMATIONS */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(25px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .reveal {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    opacity: 0; transform: translateY(35px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -421,40 +633,32 @@
     clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
   }
   @keyframes glitch1 {
-    0%,100% { transform: none; opacity: 0; }
-    5% { transform: translateX(-4px); opacity: 0.7; }
-    10% { transform: none; opacity: 0; }
-    55% { transform: translateX(3px); opacity: 0.5; }
-    60% { transform: none; opacity: 0; }
+    0%, 4.9%, 10.1%, 54.9%, 60.1%, 100% { opacity: 0; transform: none; }
+    5%, 10% { opacity: 0.75; transform: translateX(-3px); }
+    55%, 60% { opacity: 0.55; transform: translateX(2px); }
   }
   @keyframes glitch2 {
-    0%,100% { transform: none; opacity: 0; }
-    20% { transform: translateX(4px); opacity: 0.6; }
-    25% { transform: none; opacity: 0; }
-    75% { transform: translateX(-3px); opacity: 0.4; }
-    80% { transform: none; opacity: 0; }
-  }
-
-  /* Highlight bar */
-  .highlight { position: relative; display: inline-block; }
-  .highlight::after {
-    content: ''; position: absolute; left: 0; bottom: 0;
-    width: 100%; height: 30%; background: rgba(0,245,196,0.15);
-    z-index: -1;
+    0%, 19.9%, 25.1%, 74.9%, 80.1%, 100% { opacity: 0; transform: none; }
+    20%, 25% { opacity: 0.65; transform: translateX(3px); }
+    75%, 80% { opacity: 0.45; transform: translateX(-2px); }
   }
 
   /* Mobile */
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
+    nav { padding: 1.2rem 2rem; }
     .nav-links { display: none; }
-    section { padding: 4rem 1.5rem; }
-    #hero { padding: 0 1.5rem; }
-    #about .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    section { padding: 5rem 2rem; }
+    #hero { padding: 0 2rem; }
+    #about .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .hero-stats { gap: 1.8rem; }
+    footer { padding: 2rem; flex-direction: column; gap: 0.8rem; text-align: center; }
+    .chat-window { width: calc(100vw - 40px); right: -10px; }
   }
 </style>
 </head>
 <body>
+
+<canvas id="particle-canvas"></canvas>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -476,8 +680,7 @@
   <div class="hero-bg-text">AI</div>
   <p class="hero-tag">Fresher AI Engineer · Open to Opportunities</p>
   <h1 class="hero-name">
-    <span class="glitch" data-text="GANAGASABARI">GANAGASABARI</span><br>
-    <span class="line2">NATH V N</span>
+    <span class="glitch" data-text="Ganagasabarinath VN">Ganagasabarinath VN</span>
   </h1>
   <p class="hero-desc">
     Building tomorrow's intelligence today — specializing in <span style="color:var(--accent)">Generative AI</span>, RAG architectures, agentic systems, and real-world ML applications.
@@ -488,15 +691,15 @@
   </div>
   <div class="hero-stats">
     <div>
-      <div class="stat-num">3+</div>
+      <div class="stat-num" id="stat-projects">3+</div>
       <div class="stat-label">AI Projects</div>
     </div>
     <div>
-      <div class="stat-num">2</div>
+      <div class="stat-num" id="stat-internships">2</div>
       <div class="stat-label">Internships</div>
     </div>
     <div>
-      <div class="stat-num">4+</div>
+      <div class="stat-num" id="stat-certs">4+</div>
       <div class="stat-label">Certifications</div>
     </div>
     <div>
@@ -531,7 +734,10 @@
     </div>
     <div class="reveal" style="display:flex;align-items:center;justify-content:center;">
       <div class="avatar-box">
-        <div class="avatar-inner">GVN</div>
+        <div class="avatar-inner">
+          <img src="profile.png" alt="Ganagasabarinath V N" onerror="this.style.display='none'; document.getElementById('avatar-fallback').style.display='flex';" />
+          <div id="avatar-fallback" style="display:none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 6rem; background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #fff;">GVN</div>
+        </div>
         <div class="avatar-ring"></div>
       </div>
     </div>
@@ -604,8 +810,16 @@
     <h2 class="section-title">Projects</h2>
     <div class="section-line"></div>
   </div>
+  
+  <div class="projects-filter-bar reveal">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="genai">Generative AI</button>
+    <button class="filter-btn" data-filter="iot">IoT & Systems</button>
+    <button class="filter-btn" data-filter="web">AgriTech & Web</button>
+  </div>
+
   <div class="projects-grid">
-    <div class="project-card reveal">
+    <div class="project-card reveal" data-category="genai">
       <div class="project-num">01</div>
       <span class="project-badge">⚡ Featured · Generative AI</span>
       <div class="project-title">AI Knowledge Assistant</div>
@@ -617,7 +831,7 @@
         <span class="tag">Embeddings</span><span class="tag">Vector DB</span>
       </div>
     </div>
-    <div class="project-card reveal" style="transition-delay:0.15s">
+    <div class="project-card reveal" style="transition-delay:0.15s" data-category="iot">
       <div class="project-num">02</div>
       <span class="project-badge">🚗 IoT · Smart Systems</span>
       <div class="project-title">Smart Parking Management System</div>
@@ -629,7 +843,7 @@
         <span class="tag">MySQL</span>
       </div>
     </div>
-    <div class="project-card reveal" style="transition-delay:0.3s">
+    <div class="project-card reveal" style="transition-delay:0.3s" data-category="web">
       <div class="project-num">03</div>
       <span class="project-badge">🌾 AgriTech · Full Stack</span>
       <div class="project-title">AgriSmart — Cooperative Farming</div>
@@ -732,6 +946,35 @@
   </div>
 </section>
 
+<!-- AI CHAT WIDGET -->
+<div class="chat-widget" id="chatWidget">
+  <button class="chat-btn" id="chatBtn" onclick="toggleChat()">🤖</button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-avatar">G</div>
+      <div class="chat-title-info">
+        <div class="chat-name-title">GVN-AI (Avatar)</div>
+        <div class="chat-status">Online</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        Hi! I'm GVN-AI, an interactive chatbot avatar of Ganagasabarinath. Ask me about my skills, projects, or experience!
+      </div>
+    </div>
+    <div class="chat-chips">
+      <div class="chat-chip" onclick="askBot('Tell me about your RAG project')">RAG Project</div>
+      <div class="chat-chip" onclick="askBot('What is your tech stack?')">Tech Stack</div>
+      <div class="chat-chip" onclick="askBot('Where did you intern?')">Internships</div>
+      <div class="chat-chip" onclick="askBot('How can I contact you?')">Contact Info</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key === 'Enter') sendUserMsg()" />
+      <button class="chat-send-btn" onclick="sendUserMsg()">➔</button>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p>© 2026 <span class="footer-accent">Ganagasabarinath V N</span>. Crafted with passion.</p>
@@ -752,16 +995,103 @@
   }
   animateCursor();
 
-  document.querySelectorAll('a, button').forEach(el => {
+  document.querySelectorAll('a, button, .chat-chip, .filter-btn').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursor.style.width = '20px'; cursor.style.height = '20px';
-      ring.style.width = '50px'; ring.style.height = '50px';
+      cursor.style.width = '16px'; cursor.style.height = '16px';
+      ring.style.width = '48px'; ring.style.height = '48px';
+      ring.style.borderColor = 'var(--accent2)';
     });
     el.addEventListener('mouseleave', () => {
-      cursor.style.width = '12px'; cursor.style.height = '12px';
-      ring.style.width = '36px'; ring.style.height = '36px';
+      cursor.style.width = '8px'; cursor.style.height = '8px';
+      ring.style.width = '32px'; ring.style.height = '32px';
+      ring.style.borderColor = 'var(--accent)';
     });
   });
+
+  // Neural Network Canvas Particle Background
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const particleCount = 80;
+  const connectionDistance = 110;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.radius = Math.random() * 2 + 1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // Wrap around edges
+      if (this.x < 0) this.x = canvas.width;
+      if (this.x > canvas.width) this.x = 0;
+      if (this.y < 0) this.y = canvas.height;
+      if (this.y > canvas.height) this.y = 0;
+
+      // Mouse interaction
+      let dx = mx - this.x;
+      let dy = my - this.y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        let force = (120 - dist) / 120;
+        this.x -= dx / dist * force * 1.5;
+        this.y -= dy / dist * force * 1.5;
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 245, 196, 0.4)';
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Update and draw particles
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+
+    // Draw connection lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < connectionDistance) {
+          let alpha = (1 - dist / connectionDistance) * 0.15;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0, 245, 196, ${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
@@ -781,9 +1111,121 @@
     const step = target / (dur / 16);
     const timer = setInterval(() => {
       count += step;
-      if (count >= target) { count = target; clearInterval(timer); }
-      el.textContent = (Number.isInteger(target) ? Math.floor(count) : count.toFixed(0)) + suffix;
+      if (count >= target) { 
+        count = target; 
+        clearInterval(timer); 
+      }
+      el.textContent = Math.floor(count) + suffix;
     }, 16);
+  }
+
+  // Trigger counts on hero visibility
+  const statsSection = document.querySelector('.hero-stats');
+  let countsAnimated = false;
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countsAnimated) {
+        countsAnimated = true;
+        animateCount(document.getElementById('stat-projects'), 3, '+');
+        animateCount(document.getElementById('stat-internships'), 2);
+        animateCount(document.getElementById('stat-certs'), 4, '+');
+      }
+    });
+  }, { threshold: 0.2 });
+  if (statsSection) statsObserver.observe(statsSection);
+
+  // Project Tag Filters
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterVal = btn.getAttribute('data-filter');
+
+      projectCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filterVal === 'all' || category === filterVal) {
+          card.style.display = 'block';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+          }, 50);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px) scale(0.95)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+    });
+  });
+
+  // AI Chat Widget Logic
+  const chatWindow = document.getElementById('chatWindow');
+  const chatBtn = document.getElementById('chatBtn');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+
+  const botResponses = {
+    'rag': 'I built an AI Knowledge Assistant using Retrieval-Augmented Generation (RAG). It combines vector embeddings stored in a Vector DB with LLM logic in Python to search docs and answer contextually!',
+    'projects': 'I have built three major projects: 1) AI Knowledge Assistant (RAG & Python), 2) Smart Parking System (IoT & MySQL), and 3) AgriSmart Cooperative Farming Platform (AI crop advice). Which would you like to hear more about?',
+    'tech stack': 'My core tech stack includes AI/ML (Gen AI, RAG, Agentic AI, NLP, Scikit-learn), Python, Java, SQL, MySQL, and Web Tech (HTML, CSS, JS).',
+    'internships': 'I have completed two internships: 1) Generative AI Intern at Prodigy InfoTech (working on RAG & prompt engineering), and 2) AI/ML Intern at Gateway Software Solutions.',
+    'contact': 'You can reach me via email at ganagasabarinath@gmail.com or call me at +91 97500 55010. Let\'s build something great!',
+    'hello': 'Hello! How can I assist you today? Feel free to ask about my AI projects, internships, or skills.',
+    'default': 'That\'s interesting! I\'m Ganagasabarinath, an AI Engineering student specializing in Gen AI. You can reach out at ganagasabarinath@gmail.com to chat further!'
+  };
+
+  function toggleChat() {
+    chatWindow.classList.toggle('open');
+    chatBtn.classList.toggle('active');
+  }
+
+  function appendMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.classList.add('chat-msg', sender);
+    msg.textContent = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function getBotReply(query) {
+    const q = query.toLowerCase();
+    if (q.includes('rag') || q.includes('knowledge') || q.includes('assistant')) return botResponses['rag'];
+    if (q.includes('project')) return botResponses['projects'];
+    if (q.includes('tech') || q.includes('skill') || q.includes('stack') || q.includes('languages')) return botResponses['tech stack'];
+    if (q.includes('intern') || q.includes('experience')) return botResponses['internships'];
+    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('reach')) return botResponses['contact'];
+    if (q.includes('hello') || q.includes('hi') || q.includes('hey')) return botResponses['hello'];
+    return botResponses['default'];
+  }
+
+  function askBot(presetText) {
+    appendMessage(presetText, 'user');
+    
+    // Simulate thinking typing indicator
+    const typingIndicator = document.createElement('div');
+    typingIndicator.classList.add('chat-msg', 'bot');
+    typingIndicator.innerHTML = '<span class="typing">Thinking...</span>';
+    chatMessages.appendChild(typingIndicator);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    setTimeout(() => {
+      typingIndicator.remove();
+      const reply = getBotReply(presetText);
+      appendMessage(reply, 'bot');
+    }, 800);
+  }
+
+  function sendUserMsg() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    chatInput.value = '';
+    askBot(text);
   }
 </script>
 </body>
