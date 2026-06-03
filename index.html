@@ -687,6 +687,7 @@
   </p>
   <div class="hero-cta">
     <a href="mailto:ganagasabarinath@gmail.com" class="btn btn-primary">⚡ Hire Me</a>
+    <a href="resume.pdf" target="_blank" class="btn btn-outline">📄 Resume</a>
     <a href="#projects" class="btn btn-outline">View Projects →</a>
   </div>
   <div class="hero-stats">
@@ -728,8 +729,9 @@
       <p>
         Currently sharpening my skills through internships and projects, I'm on the lookout for <span>full-time AI/ML roles</span> where I can contribute, grow, and build things that matter.
       </p>
-      <div style="margin-top:1.5rem;">
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
         <a href="mailto:ganagasabarinath@gmail.com" class="btn btn-outline" style="font-size:0.75rem">📧 ganagasabarinath@gmail.com</a>
+        <a href="resume.pdf" target="_blank" class="btn btn-outline" style="font-size:0.75rem">📄 View Resume</a>
       </div>
     </div>
     <div class="reveal" style="display:flex;align-items:center;justify-content:center;">
@@ -964,6 +966,8 @@
     </div>
     <div class="chat-chips">
       <div class="chat-chip" onclick="askBot('Tell me about your RAG project')">RAG Project</div>
+      <div class="chat-chip" onclick="askBot('Tell me about your Smart Parking project')">Smart Parking</div>
+      <div class="chat-chip" onclick="askBot('Tell me about your AgriSmart project')">AgriSmart</div>
       <div class="chat-chip" onclick="askBot('What is your tech stack?')">Tech Stack</div>
       <div class="chat-chip" onclick="askBot('Where did you intern?')">Internships</div>
       <div class="chat-chip" onclick="askBot('How can I contact you?')">Contact Info</div>
@@ -1172,6 +1176,8 @@
 
   const botResponses = {
     'rag': 'I built an AI Knowledge Assistant using Retrieval-Augmented Generation (RAG). It combines vector embeddings stored in a Vector DB with LLM logic in Python to search docs and answer contextually!',
+    'parking': 'The Smart Parking Management System is an automated IoT-based slot allocation system with real-time displays. Built using Python and MySQL, it cuts slot search time and improves local urban mobility.',
+    'agrismart': 'AgriSmart is a cooperative farming platform connecting farmers, workers, and buyers. It incorporates an AI crop advisory system, multilingual support, and cooperative commerce logic using Javascript.',
     'projects': 'I have built three major projects: 1) AI Knowledge Assistant (RAG & Python), 2) Smart Parking System (IoT & MySQL), and 3) AgriSmart Cooperative Farming Platform (AI crop advice). Which would you like to hear more about?',
     'tech stack': 'My core tech stack includes AI/ML (Gen AI, RAG, Agentic AI, NLP, Scikit-learn), Python, Java, SQL, MySQL, and Web Tech (HTML, CSS, JS).',
     'internships': 'I have completed two internships: 1) Generative AI Intern at Prodigy InfoTech (working on RAG & prompt engineering), and 2) AI/ML Intern at Gateway Software Solutions.',
@@ -1195,6 +1201,8 @@
 
   function getBotReply(query) {
     const q = query.toLowerCase();
+    if (q.includes('parking') || q.includes('slot') || q.includes('automating')) return botResponses['parking'];
+    if (q.includes('agrismart') || q.includes('farming') || q.includes('crop') || q.includes('agri')) return botResponses['agrismart'];
     if (q.includes('rag') || q.includes('knowledge') || q.includes('assistant')) return botResponses['rag'];
     if (q.includes('project')) return botResponses['projects'];
     if (q.includes('tech') || q.includes('skill') || q.includes('stack') || q.includes('languages')) return botResponses['tech stack'];
