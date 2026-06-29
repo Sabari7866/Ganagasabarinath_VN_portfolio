@@ -726,10 +726,7 @@
        Skills Section (Visualization + Cards)
        ══════════════════════════════════════════ */
     .skills-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 48px;
-      align-items: flex-start;
+      display: block;
     }
 
     /* Skill proficiency dashboard */
@@ -804,9 +801,9 @@
 
     /* Specific Skills tags grid */
     .skills-cards-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
     }
 
     .skill-category-card {
@@ -1589,7 +1586,7 @@
                 <span class="hero-stat-label">Internships</span>
               </div>
               <div class="hero-stat-card">
-                <span class="hero-stat-num" id="hero-stat-certs">5</span>
+                <span class="hero-stat-num" id="hero-stat-certs">6</span>
                 <span class="hero-stat-label">Certifications</span>
               </div>
             </div>
@@ -1665,49 +1662,6 @@
       <div class="container">
         <div class="section-title-mono">02 // Technical Capabilities</div>
         <div class="skills-grid">
-          <!-- Visual Proficiency Charts -->
-          <div class="skills-chart-container">
-            <h3 class="skills-chart-title">Visual Proficiency Level</h3>
-            <div class="skills-chart-list">
-              <div class="skill-chart-item">
-                <div class="skill-chart-header">
-                  <span class="skill-chart-name">Generative AI & RAG</span>
-                  <span class="skill-chart-value">95%</span>
-                </div>
-                <div class="skill-chart-bar-track">
-                  <div class="skill-chart-bar-fill" data-percentage="95%"></div>
-                </div>
-              </div>
-              <div class="skill-chart-item">
-                <div class="skill-chart-header">
-                  <span class="skill-chart-name">Python & Java</span>
-                  <span class="skill-chart-value">90%</span>
-                </div>
-                <div class="skill-chart-bar-track">
-                  <div class="skill-chart-bar-fill" data-percentage="90%"></div>
-                </div>
-              </div>
-              <div class="skill-chart-item">
-                <div class="skill-chart-header">
-                  <span class="skill-chart-name">Web Technologies (HTML, CSS, JS)</span>
-                  <span class="skill-chart-value">85%</span>
-                </div>
-                <div class="skill-chart-bar-track">
-                  <div class="skill-chart-bar-fill" data-percentage="85%"></div>
-                </div>
-              </div>
-              <div class="skill-chart-item">
-                <div class="skill-chart-header">
-                  <span class="skill-chart-name">Databases & Vector DB (SQL, Embeddings)</span>
-                  <span class="skill-chart-value">80%</span>
-                </div>
-                <div class="skill-chart-bar-track">
-                  <div class="skill-chart-bar-fill amber" data-percentage="80%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Specific Skills Cards -->
           <div class="skills-cards-wrapper">
             <div class="skill-category-card">
@@ -1741,6 +1695,18 @@
                 <span class="mono-tag">MySQL</span>
                 <span class="mono-tag">Vector Databases</span>
                 <span class="mono-tag">Embeddings</span>
+              </div>
+            </div>
+
+            <div class="skill-category-card">
+              <h4 class="skill-category-title">🛠️ Tools & Platforms</h4>
+              <div class="skill-category-tags">
+                <span class="mono-tag">Git</span>
+                <span class="mono-tag">GitHub</span>
+                <span class="mono-tag">Vercel</span>
+                <span class="mono-tag">Claude</span>
+                <span class="mono-tag">ChatGPT</span>
+                <span class="mono-tag">Docker</span>
               </div>
             </div>
           </div>
@@ -2026,6 +1992,14 @@
             <div class="cert-body">
               <h4 class="cert-name">Building with Artificial Intelligence</h4>
               <span class="cert-issuer">Saylor Academy</span>
+            </div>
+          </div>
+          <!-- Cert 6 -->
+          <div class="cert-editorial-card">
+            <span class="cert-icon">🍃</span>
+            <div class="cert-body">
+              <h4 class="cert-name">Introduction to AI and Vector Search</h4>
+              <span class="cert-issuer">MongoDB</span>
             </div>
           </div>
         </div>
