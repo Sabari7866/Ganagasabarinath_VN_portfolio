@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="120" viewBox="0 0 720 120">
+  <style>
+    @keyframes scrollLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-720px); }
+    }
+    @keyframes scrollRight {
+      0% { transform: translateX(-720px); }
+      100% { transform: translateX(0); }
+    }
+    .marquee-bg { fill: #141210; rx: 8px; stroke: #2e2a24; stroke-width: 1.5; }
+    .tag { fill: #1e1b18; stroke: #2e2a24; stroke-width: 1.2; rx: 6px; }
+    .tag-text { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11px; fill: #e4e4e7; font-weight: 600; text-anchor: middle; }
+    
+    /* Alternating text colors for variety */
+    .tag-accent-1 { fill: #818cf8; }
+    .tag-accent-2 { fill: #fbbf24; }
+    
+    .scroll-container-left {
+      animation: scrollLeft 18s linear infinite;
+    }
+    .scroll-container-right {
+      animation: scrollRight 18s linear infinite;
+    }
+  </style>
+  
+  <!-- Background Card -->
+  <rect width="720" height="120" class="marquee-bg" />
+  
+  <!-- Row 1: Left scrolling (x: 0 to -720) -->
+  <g transform="translate(0, 20)">
+    <g class="scroll-container-left">
+      <!-- Set 1 -->
+      <g transform="translate(0, 0)">
+        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <text x="65" y="19" class="tag-text tag-accent-1">Python</text>
+        
+        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <text x="185" y="19" class="tag-text">GenAI / LLMs</text>
+        
+        <rect x="250" y="0" width="110" height="30" class="tag" />
+        <text x="305" y="19" class="tag-text tag-accent-2">Java</text>
+        
+        <rect x="370" y="0" width="110" height="30" class="tag" />
+        <text x="425" y="19" class="tag-text">MySQL</text>
+        
+        <rect x="490" y="0" width="110" height="30" class="tag" />
+        <text x="545" y="19" class="tag-text tag-accent-1">C++</text>
+        
+        <rect x="610" y="0" width="110" height="30" class="tag" />
+        <text x="665" y="19" class="tag-text">RAG Systems</text>
+      </g>
+      <!-- Set 2 (Duplicate for seamless loop) -->
+      <g transform="translate(720, 0)">
+        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <text x="65" y="19" class="tag-text tag-accent-1">Python</text>
+        
+        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <text x="185" y="19" class="tag-text">GenAI / LLMs</text>
+        
+        <rect x="250" y="0" width="110" height="30" class="tag" />
+        <text x="305" y="19" class="tag-text tag-accent-2">Java</text>
+        
+        <rect x="370" y="0" width="110" height="30" class="tag" />
+        <text x="425" y="19" class="tag-text">MySQL</text>
+        
+        <rect x="490" y="0" width="110" height="30" class="tag" />
+        <text x="545" y="19" class="tag-text tag-accent-1">C++</text>
+        
+        <rect x="610" y="0" width="110" height="30" class="tag" />
+        <text x="665" y="19" class="tag-text">RAG Systems</text>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Row 2: Right scrolling (x: -720 to 0) -->
+  <g transform="translate(0, 70)">
+    <g class="scroll-container-right">
+      <!-- Set 1 -->
+      <g transform="translate(0, 0)">
+        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <text x="65" y="19" class="tag-text tag-accent-2">Docker</text>
+        
+        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <text x="185" y="19" class="tag-text">Git / GitHub</text>
+        
+        <rect x="250" y="0" width="110" height="30" class="tag" />
+        <text x="305" y="19" class="tag-text tag-accent-1">Vector DBs</text>
+        
+        <rect x="370" y="0" width="110" height="30" class="tag" />
+        <text x="425" y="19" class="tag-text">Vercel</text>
+        
+        <rect x="490" y="0" width="110" height="30" class="tag" />
+        <text x="545" y="19" class="tag-text tag-accent-2">Embeddings</text>
+        
+        <rect x="610" y="0" width="110" height="30" class="tag" />
+        <text x="665" y="19" class="tag-text">Agentic AI</text>
+      </g>
+      <!-- Set 2 (Duplicate for seamless loop) -->
+      <g transform="translate(720, 0)">
+        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <text x="65" y="19" class="tag-text tag-accent-2">Docker</text>
+        
+        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <text x="185" y="19" class="tag-text">Git / GitHub</text>
+        
+        <rect x="250" y="0" width="110" height="30" class="tag" />
+        <text x="305" y="19" class="tag-text tag-accent-1">Vector DBs</text>
+        
+        <rect x="370" y="0" width="110" height="30" class="tag" />
+        <text x="425" y="19" class="tag-text">Vercel</text>
+        
+        <rect x="490" y="0" width="110" height="30" class="tag" />
+        <text x="545" y="19" class="tag-text tag-accent-2">Embeddings</text>
+        
+        <rect x="610" y="0" width="110" height="30" class="tag" />
+        <text x="665" y="19" class="tag-text">Agentic AI</text>
+      </g>
+    </g>
+  </g>
+</svg>

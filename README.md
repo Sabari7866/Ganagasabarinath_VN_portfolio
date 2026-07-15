@@ -64,6 +64,13 @@
 
 <br />
 
+<div align="center">
+  <!-- Alternating Scrolling Marquee -->
+  <img src="https://raw.githubusercontent.com/Sabari7866/Ganagasabarinath_VN_portfolio/main/marquee.svg" width="100%" max-width="720px" alt="Scrolling Tech Stack" />
+</div>
+
+<br />
+
 - **🧠 AI & Machine Learning:** Generative AI, Retrieval-Augmented Generation (RAG), Large Language Models (LLMs), Agentic Systems, Prompt Engineering, Scikit-learn
 - **🐍 Programming Languages:** Python, Java, SQL, C++
 - **📊 Data Science & DBs:** Pandas, NumPy, Data Visualization, MySQL, Vector Databases, Embeddings
