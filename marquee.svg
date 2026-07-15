@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="120" viewBox="0 0 720 120">
   <defs>
-    <!-- Metallic Gold Gradient -->
+    <!-- Rich Metallic Gold Gradient for text -->
     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFE259" />
       <stop offset="50%" stop-color="#FFA751" />
@@ -17,11 +17,36 @@
       0% { transform: translateX(-720px); }
       100% { transform: translateX(0); }
     }
+    
+    /* RGB Shifting Border Animation */
+    @keyframes rgbBorder {
+      0% { stroke: #ff0055; }
+      16% { stroke: #00ff55; }
+      33% { stroke: #0055ff; }
+      50% { stroke: #00ffff; }
+      66% { stroke: #ff00ff; }
+      83% { stroke: #ffcc00; }
+      100% { stroke: #ff0055; }
+    }
+
     .marquee-bg { fill: #141210; rx: 8px; stroke: #2e2a24; stroke-width: 1.5; }
     
-    /* Golden Styled Tags */
-    .tag { fill: #1a160e; stroke: url(#goldGrad); stroke-width: 1.5; rx: 6px; }
-    .tag-text { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11px; fill: url(#goldGrad); font-weight: 700; text-anchor: middle; }
+    /* Tag style with RGB animated border and dark gold shadow */
+    .tag { 
+      fill: #15120e; 
+      stroke-width: 1.5; 
+      rx: 6px; 
+      animation: rgbBorder 6s linear infinite; 
+    }
+    
+    /* Keep text in premium Gold gradient */
+    .tag-text { 
+      font-family: 'JetBrains Mono', 'Fira Code', monospace; 
+      font-size: 11px; 
+      fill: url(#goldGrad); 
+      font-weight: 700; 
+      text-anchor: middle; 
+    }
     
     .scroll-container-left {
       animation: scrollLeft 18s linear infinite;
@@ -29,40 +54,48 @@
     .scroll-container-right {
       animation: scrollRight 18s linear infinite;
     }
+    
+    /* Staggered animation delays for RGB borders to create a wave flow effect */
+    .t-1 { animation-delay: 0s; }
+    .t-2 { animation-delay: -1s; }
+    .t-3 { animation-delay: -2s; }
+    .t-4 { animation-delay: -3s; }
+    .t-5 { animation-delay: -4s; }
+    .t-6 { animation-delay: -5s; }
   </style>
   
   <!-- Background Card -->
   <rect width="720" height="120" class="marquee-bg" />
   
-  <!-- Row 1: Left scrolling (x: 0 to -720) -->
+  <!-- Row 1: Left scrolling -->
   <g transform="translate(0, 20)">
     <g class="scroll-container-left">
       <!-- Set 1 -->
       <g transform="translate(0, 0)">
-        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <rect x="10" y="0" width="110" height="30" class="tag t-1" />
         <text x="65" y="19" class="tag-text">Python</text>
         
-        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <rect x="130" y="0" width="110" height="30" class="tag t-2" />
         <text x="185" y="19" class="tag-text">GenAI / LLMs</text>
         
-        <rect x="250" y="0" width="110" height="30" class="tag" />
+        <rect x="250" y="0" width="110" height="30" class="tag t-3" />
         <text x="305" y="19" class="tag-text">Java</text>
         
-        <rect x="370" y="0" width="110" height="30" class="tag" />
+        <rect x="370" y="0" width="110" height="30" class="tag t-4" />
         <text x="425" y="19" class="tag-text">MySQL</text>
         
-        <rect x="490" y="0" width="110" height="30" class="tag" />
+        <rect x="490" y="0" width="110" height="30" class="tag t-5" />
         <text x="545" y="19" class="tag-text">C++</text>
         
-        <rect x="610" y="0" width="110" height="30" class="tag" />
+        <rect x="610" y="0" width="110" height="30" class="tag t-6" />
         <text x="665" y="19" class="tag-text">RAG Systems</text>
       </g>
       <!-- Set 2 (Duplicate for seamless loop) -->
       <g transform="translate(720, 0)">
-        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <rect x="10" y="0" width="110" height="30" class="tag t-1" />
         <text x="65" y="19" class="tag-text">Python</text>
         
-        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <rect x="130" y="0" width="110" height="30" class="tag t-2" />
         <text x="185" y="19" class="tag-text">GenAI / LLMs</text>
         
         <rect x="250" y="0" width="110" height="30" class="tag" />
@@ -80,27 +113,27 @@
     </g>
   </g>
   
-  <!-- Row 2: Right scrolling (x: -720 to 0) -->
+  <!-- Row 2: Right scrolling -->
   <g transform="translate(0, 70)">
     <g class="scroll-container-right">
       <!-- Set 1 -->
       <g transform="translate(0, 0)">
-        <rect x="10" y="0" width="110" height="30" class="tag" />
+        <rect x="10" y="0" width="110" height="30" class="tag t-6" />
         <text x="65" y="19" class="tag-text">Docker</text>
         
-        <rect x="130" y="0" width="110" height="30" class="tag" />
+        <rect x="130" y="0" width="110" height="30" class="tag t-5" />
         <text x="185" y="19" class="tag-text">Git / GitHub</text>
         
-        <rect x="250" y="0" width="110" height="30" class="tag" />
+        <rect x="250" y="0" width="110" height="30" class="tag t-4" />
         <text x="305" y="19" class="tag-text">Vector DBs</text>
         
-        <rect x="370" y="0" width="110" height="30" class="tag" />
+        <rect x="370" y="0" width="110" height="30" class="tag t-3" />
         <text x="425" y="19" class="tag-text">Vercel</text>
         
-        <rect x="490" y="0" width="110" height="30" class="tag" />
+        <rect x="490" y="0" width="110" height="30" class="tag t-2" />
         <text x="545" y="19" class="tag-text">Embeddings</text>
         
-        <rect x="610" y="0" width="110" height="30" class="tag" />
+        <rect x="610" y="0" width="110" height="30" class="tag t-1" />
         <text x="665" y="19" class="tag-text">Agentic AI</text>
       </g>
       <!-- Set 2 (Duplicate for seamless loop) -->
