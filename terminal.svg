@@ -4,12 +4,28 @@
       <stop offset="0%" stop-color="#1e1b18" />
       <stop offset="100%" stop-color="#171513" />
     </linearGradient>
+    <!-- Gold Gradient for prompts and cursor -->
+    <linearGradient id="goldPrompt" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFE259" />
+      <stop offset="100%" stop-color="#FFA751" />
+    </linearGradient>
   </defs>
   
   <style>
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
+    }
+    
+    /* RGB Shifting Border Animation */
+    @keyframes rgbBorder {
+      0% { stroke: #ff0055; }
+      16% { stroke: #00ff55; }
+      33% { stroke: #0055ff; }
+      50% { stroke: #00ffff; }
+      66% { stroke: #ff00ff; }
+      83% { stroke: #ffcc00; }
+      100% { stroke: #ff0055; }
     }
     
     @keyframes fadeLine1 {
@@ -48,20 +64,21 @@
       97%, 100% { opacity: 0; }
     }
 
-    .term-bg { fill: #141210; rx: 8px; stroke: #2e2a24; stroke-width: 1.5; }
+    /* Term background with animated RGB border stroke */
+    .term-bg { fill: #141210; rx: 8px; stroke-width: 2; animation: rgbBorder 10s linear infinite; }
     .term-bar { fill: url(#headerGrad); }
     .dot-r { fill: #ff5f56; }
     .dot-y { fill: #ffbd2e; }
     .dot-g { fill: #27c93f; }
     .text-title { fill: #a8a29e; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.05em; }
     
-    .text-prompt { fill: #818cf8; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; font-weight: bold; }
+    .text-prompt { fill: url(#goldPrompt); font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; font-weight: bold; }
     .text-cmd { fill: #ffffff; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; font-weight: 500; }
     .text-output { fill: #34d399; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; }
     .text-output-muted { fill: #a8a29e; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; }
     .text-accent { fill: #fbbf24; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; }
     
-    .cursor { fill: #818cf8; animation: blink 1s step-end infinite; }
+    .cursor { fill: url(#goldPrompt); animation: blink 1s step-end infinite; }
     
     .line { transition: all 0.3s ease; }
     .line-1 { animation: fadeLine1 15s infinite; }

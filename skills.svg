@@ -1,18 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="250" viewBox="0 0 720 250">
+  <defs>
+    <!-- Rich Metallic Gold Gradient for progress fills -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFE259" />
+      <stop offset="50%" stop-color="#FFA751" />
+      <stop offset="100%" stop-color="#b8860b" />
+    </linearGradient>
+  </defs>
+
   <style>
     @keyframes loadBar1 { from { width: 0; } to { width: 520px; } }
     @keyframes loadBar2 { from { width: 0; } to { width: 490px; } }
     @keyframes loadBar3 { from { width: 0; } to { width: 460px; } }
     @keyframes loadBar4 { from { width: 0; } to { width: 430px; } }
 
-    .chart-bg { fill: #141210; rx: 8px; stroke: #2e2a24; stroke-width: 1.5; }
+    /* RGB Shifting Border Animation */
+    @keyframes rgbBorder {
+      0% { stroke: #ff0055; }
+      16% { stroke: #00ff55; }
+      33% { stroke: #0055ff; }
+      50% { stroke: #00ffff; }
+      66% { stroke: #ff00ff; }
+      83% { stroke: #ffcc00; }
+      100% { stroke: #ff0055; }
+    }
+
+    /* Container Card with RGB Border */
+    .chart-bg { fill: #141210; rx: 8px; stroke-width: 2; animation: rgbBorder 10s linear infinite; }
     .bar-track { fill: #1e1b18; rx: 4px; }
-    .bar-fill { rx: 4px; fill: #818cf8; }
-    .bar-fill-amber { rx: 4px; fill: #fbbf24; }
+    
+    /* Progress bars fill with Gold gradient */
+    .bar-fill { rx: 4px; fill: url(#goldGrad); }
     
     .label { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12px; fill: #e4e4e7; font-weight: 600; }
-    .val { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11px; fill: #818cf8; font-weight: bold; }
-    .val-amber { fill: #fbbf24; }
+    .val { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 11px; fill: url(#goldGrad); font-weight: bold; }
 
     .bar-1 { animation: loadBar1 1.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
     .bar-2 { animation: loadBar2 1.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
@@ -34,9 +55,9 @@
   <!-- Skill Item 2 -->
   <g transform="translate(30, 80)">
     <text x="0" y="15" class="label">🐍 Python Programming &amp; Deep Learning</text>
-    <text x="610" y="15" class="val val-amber">85%</text>
+    <text x="610" y="15" class="val">85%</text>
     <rect x="0" y="25" width="660" height="8" class="bar-track" />
-    <rect x="0" y="25" width="0" height="8" class="bar-fill-amber bar-2" />
+    <rect x="0" y="25" width="0" height="8" class="bar-fill bar-2" />
   </g>
 
   <!-- Skill Item 3 -->
@@ -50,8 +71,8 @@
   <!-- Skill Item 4 -->
   <g transform="translate(30, 180)">
     <text x="0" y="15" class="label">🚗 IoT Arrays &amp; Real-time Systems</text>
-    <text x="610" y="15" class="val val-amber">75%</text>
+    <text x="610" y="15" class="val">75%</text>
     <rect x="0" y="25" width="660" height="8" class="bar-track" />
-    <rect x="0" y="25" width="0" height="8" class="bar-fill-amber bar-4" />
+    <rect x="0" y="25" width="0" height="8" class="bar-fill bar-4" />
   </g>
 </svg>
