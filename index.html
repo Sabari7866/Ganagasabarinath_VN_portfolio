@@ -683,6 +683,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center top;
       transition: transform 0.4s;
     }
 
@@ -1528,7 +1529,7 @@
         </button>
 
         <!-- PDF download button in nav -->
-        <a href="resume.pdf" target="_blank" class="btn outline" style="padding: 6px 12px; font-size: 11px;">Resume
+        <a href="resume.pdf" download="Ganagasabarinath_VN_Resume.pdf" target="_blank" class="btn outline" style="padding: 6px 12px; font-size: 11px;">Resume
           (PDF)</a>
 
         <!-- Mobile toggle drawer button -->
@@ -1551,7 +1552,7 @@
       <li><a href="#certifications" class="mobile-nav-link">Certifications</a></li>
       <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
     </ul>
-    <a href="resume.pdf" target="_blank" class="btn primary" style="justify-content: center;">📄 Download Resume
+    <a href="resume.pdf" download="Ganagasabarinath_VN_Resume.pdf" target="_blank" class="btn primary" style="justify-content: center;">📄 Download Resume
       (PDF)</a>
   </div>
 
@@ -1575,7 +1576,7 @@
             </p>
             <div class="hero-cta">
               <a href="mailto:ganagasabarinath@gmail.com" class="btn primary">⚡ Hire Me</a>
-              <a href="resume.pdf" target="_blank" class="btn outline">📄 Download Resume (PDF)</a>
+              <a href="resume.pdf" download="Ganagasabarinath_VN_Resume.pdf" target="_blank" class="btn outline">📄 Download Resume (PDF)</a>
             </div>
 
             <!-- Monospace quick counts -->
@@ -1633,7 +1634,7 @@
         <div class="about-grid">
           <!-- Left side: Polaroid frame image -->
           <div class="about-image-wrapper">
-            <img src="profile.png" alt="Ganagasabarinath V N"
+            <img src="profile.jpeg" alt="Ganagasabarinath V N"
               onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;about-image-fallback&quot;>GVN</div>';" />
           </div>
           <!-- Right side: Editorial text -->
@@ -2074,7 +2075,7 @@
           © 2026 Ganagasabarinath V N. Terminal Minimal Theme.
         </span>
         <div class="footer-links">
-          <a href="resume.pdf" target="_blank" class="footer-link-action">📄 Resume (PDF)</a>
+          <a href="resume.pdf" download="Ganagasabarinath_VN_Resume.pdf" target="_blank" class="footer-link-action">📄 Resume (PDF)</a>
           <a href="#hero" class="footer-link-action">↑ Back to Top</a>
         </div>
       </div>
@@ -2399,6 +2400,18 @@
         else if (/agrismart|farming|crop/.test(command)) reply = answers['agrismart'];
         else if (/rag|knowledge|assistant/.test(command)) reply = answers['rag'];
         else if (/project|list-projects|portfolio/.test(command)) reply = answers['projects'];
+        else if (/intro|cat intro\.txt/.test(command)) {
+          reply = 'Building intelligent applications, RAG pipelines, and agent systems.<br>Currently open to AI/ML engineering roles!';
+        }
+        else if (/resume|cat resume\.pdf|download resume/.test(command)) {
+          const link = document.createElement('a');
+          link.href = 'resume.pdf';
+          link.download = 'Ganagasabarinath_VN_Resume.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          reply = "Downloading resume.pdf...";
+        }
         else if (/tech|skill|cat skills\.json|stack/.test(command)) reply = answers['tech stack'];
         else if (/intern|experience|get-internships|work/.test(command)) reply = answers['internships'];
         else if (/contact|email|contact-info|hire/.test(command)) reply = answers['contact'];

@@ -41,7 +41,7 @@
       </ul>
     </td>
     <td width="35%" align="center" valign="middle">
-      <img src="https://raw.githubusercontent.com/Sabari7866/Ganagasabarinath_VN_portfolio/main/profile.png" width="180px" style="border-radius: 12px; border: 2px solid #818cf8;" alt="Ganagasabarinath V N" />
+      <img src="https://raw.githubusercontent.com/Sabari7866/Ganagasabarinath_VN_portfolio/main/profile.jpeg" width="180px" style="border-radius: 12px; border: 2px solid #818cf8;" alt="Ganagasabarinath V N" />
     </td>
   </tr>
 </table>
