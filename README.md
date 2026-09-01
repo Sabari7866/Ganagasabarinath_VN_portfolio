@@ -5,14 +5,6 @@
   </a>
 </p>
 
-<!-- Interactive Banner Selector / Thumbnail Gallery -->
-<p align="center">
-  <sub><b>🖼️ Gallery Slides:</b></sub>
-  <a href="banner/banner1.png"><b>[ Slide 1: AI Systems ]</b></a> &nbsp;•&nbsp; 
-  <a href="banner/banner2.png"><b>[ Slide 2: Developer Console ]</b></a> &nbsp;•&nbsp; 
-  <a href="banner/banner3.png"><b>[ Slide 3: RAG &amp; ML Architecture ]</b></a>
-</p>
-
 <br />
 
 <!-- Header Wave Banner -->
