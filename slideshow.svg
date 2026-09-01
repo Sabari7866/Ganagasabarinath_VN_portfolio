@@ -69,13 +69,6 @@
     <!-- Dark Gradient Overlay for Readability -->
     <rect width="1200" height="400" fill="url(#overlay-grad)" />
 
-    <!-- Top Badge -->
-    <g transform="translate(24, 28)">
-      <rect width="210" height="28" rx="14" fill="#1c1917" fill-opacity="0.8" stroke="#332e2b" stroke-width="1" />
-      <circle cx="14" cy="14" r="4" fill="#34d399" />
-      <text x="26" y="18" class="badge">FEATURED GALLERY</text>
-    </g>
-
     <!-- Bottom Center Slide Dots -->
     <g transform="translate(560, 368)">
       <rect class="dot dot-1" x="0" y="0" width="10" height="8" rx="4" />
