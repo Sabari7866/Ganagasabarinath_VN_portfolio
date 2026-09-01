@@ -1,22 +1,76 @@
-<!-- Waving Wave Banner -->
+<!-- Top Banner Slideshow -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=4F46E5,d97706,818cf8&height=220&section=header&text=Ganagasabarinath%20V%20N&subtitle=AI%20%26%20Data%20Science%20Engineer&fontSize=42&fontAlignY=38&descAlignY=62&theme=dark" width="100%" alt="Header Wave Banner" />
+  <a href="https://github.com/Sabari7866/Ganagasabarinath_VN_portfolio">
+    <img src="banner/slideshow.svg" width="100%" alt="Ganagasabarinath V N Portfolio Banner Slideshow" />
+  </a>
+</p>
+
+<!-- Interactive Banner Selector / Thumbnail Gallery -->
+<p align="center">
+  <sub><b>🖼️ Gallery Slides:</b></sub>
+  <a href="banner/banner1.png"><b>[ Slide 1: AI Systems ]</b></a> &nbsp;•&nbsp; 
+  <a href="banner/banner2.png"><b>[ Slide 2: Developer Console ]</b></a> &nbsp;•&nbsp; 
+  <a href="banner/banner3.png"><b>[ Slide 3: RAG &amp; ML Architecture ]</b></a>
+</p>
+
+<br />
+
+<!-- Header Wave Banner -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=4F46E5,d97706,818cf8&height=200&section=header&text=Ganagasabarinath%20V%20N&subtitle=AI%20%26%20Data%20Science%20Engineer&fontSize=40&fontAlignY=38&descAlignY=62&theme=dark" width="100%" alt="Ganagasabarinath V N Header" />
 </p>
 
 <div align="center">
   <!-- Typing SVG Animation -->
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=25&duration=3000&pause=1000&color=818CF8&center=true&vCenter=true&width=600&lines=Hi+there!+I'm+Ganagasabarinath+V+N;AI+%26+Data+Science+Engineer;Building+Agentic+Systems+%26+RAG;Open+to+ML+Engineer+Roles" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=25&duration=3000&pause=1000&color=818CF8&center=true&vCenter=true&width=650&lines=Hi+there!+I'm+Ganagasabarinath+V+N;AI+%26+Data+Science+Engineer;Building+Agentic+Systems+%26+RAG;Open+to+ML+Engineer+Roles" alt="Typing SVG" />
 
   <p align="center">
-    <a href="mailto:ganagasabarinath@gmail.com"><img src="https://img.shields.io/badge/Email-ganagasabarinath%40gmail.com-blue?style=for-the-badge&logo=gmail&logoColor=white&color=4F46E5" alt="Email" /></a>
-    <a href="https://linkedin.com"><img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin&logoColor=white&color=d97706" alt="LinkedIn" /></a>
-    <a href="https://raw.githubusercontent.com/Sabari7866/Ganagasabarinath_VN_portfolio/main/resume.pdf"><img src="https://img.shields.io/badge/Resume-PDF-blue?style=for-the-badge&logo=adobe-acrobat-reader&logoColor=white&color=1c1917" alt="Resume" /></a>
+    <a href="mailto:ganagasabarinath@gmail.com">
+      <img src="https://img.shields.io/badge/Email-ganagasabarinath%40gmail.com-blue?style=for-the-badge&logo=gmail&logoColor=white&color=4F46E5" alt="Email" />
+    </a>
+    <a href="https://linkedin.com">
+      <img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin&logoColor=white&color=d97706" alt="LinkedIn" />
+    </a>
+    <a href="https://raw.githubusercontent.com/Sabari7866/Ganagasabarinath_VN_portfolio/main/resume.pdf">
+      <img src="https://img.shields.io/badge/Resume-View%20PDF-blue?style=for-the-badge&logo=adobe-acrobat-reader&logoColor=white&color=dc2626" alt="Resume PDF" />
+    </a>
+    <a href="resume.pdf" download="Ganagasabarinath_VN_Resume.pdf">
+      <img src="https://img.shields.io/badge/Download-CV-blue?style=for-the-badge&logo=google-drive&logoColor=white&color=16a34a" alt="Download CV" />
+    </a>
   </p>
 
   <!-- Profile Visitor Counter -->
   <p align="center">
     <img src="https://profile-counter.glitch.me/Sabari7866/count.svg" alt="Visitor Counter" />
   </p>
+</div>
+
+<br />
+
+<!-- 📄 PROMINENT RESUME & CAREER PROFILE CARD -->
+<div align="center">
+  <table width="100%" style="background-color: #141210; border: 2px solid #818cf8; border-radius: 12px;">
+    <tr>
+      <td style="padding: 20px;">
+        <h2 align="center">📄 Official Resume &amp; Professional Summary</h2>
+        <p align="center">
+          <b>Ganagasabarinath V N</b> • AI &amp; Data Science Engineer (B.Tech)
+        </p>
+        <p align="center">
+          Specializing in Generative AI, Retrieval-Augmented Generation (RAG), Agentic Workflows, and Data Pipelines.
+        </p>
+        <div align="center">
+          <a href="https://raw.githubusercontent.com/Sabari7866/Ganagasabarinath_VN_portfolio/main/resume.pdf">
+            <img src="https://img.shields.io/badge/📄%20Open%20Resume%20in%20Browser-PDF-4F46E5?style=for-the-badge&logoWidth=20" alt="Open Resume in Browser" />
+          </a>
+          &nbsp;&nbsp;
+          <a href="resume.pdf" download="Ganagasabarinath_VN_Resume.pdf">
+            <img src="https://img.shields.io/badge/📥%20Download%20Direct%20PDF-Resume-d97706?style=for-the-badge&logoWidth=20" alt="Download Direct PDF" />
+          </a>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <br />
@@ -38,6 +92,7 @@
         <li>🎓 <strong>B.Tech</strong> in Artificial Intelligence & Data Science</li>
         <li>⚡ <strong>Status:</strong> Active graduate applicant, open to ML Engineer / Developer roles</li>
         <li>📍 <strong>Location:</strong> Coimbatore, Tamil Nadu, India</li>
+        <li>📄 <strong>Resume:</strong> <a href="resume.pdf">Download PDF Version</a></li>
       </ul>
     </td>
     <td width="35%" align="center" valign="middle">
@@ -161,5 +216,5 @@
 ---
 
 <div align="center">
-  <sub>© 2026 Ganagasabarinath V N. Designed with a Terminal minimal theme.</sub>
+  <sub>© 2026 Ganagasabarinath V N. Designed with custom Banner Slideshow &amp; Developer Theme.</sub>
 </div>
